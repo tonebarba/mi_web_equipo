@@ -2,13 +2,7 @@ pipeline {
     agent any
 
     stages {
-        stage('Checkout') {
-            steps {
-                echo 'El código ya está en el workspace de Jenkins'
-            }
-        }
-
-        stage('Desplegar web (copiar archivos)') {
+        stage('Deploy') {
             steps {
                 sh '''
                 rm -rf /var/jenkins_home/web/*
@@ -20,7 +14,7 @@ pipeline {
 
     post {
         success {
-            echo 'Despliegue completado correctamente'
+            echo 'Web actualizada correctamente'
         }
         failure {
             echo 'Error en el despliegue'
