@@ -4,29 +4,27 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                echo 'Código descargado automáticamente'
+                echo 'El código ya está en el workspace de Jenkins'
             }
         }
 
-        stage('Build Docker image') {
+        stage('Desplegar web (copiar archivos)') {
             steps {
-                sh 'docker build -t mi_web:latest .'
-            }
-        }
-
-        stage('Deploy con docker-compose') {
-            steps {
-                sh 'docker compose up -d --build'
+                sh '''
+                rsync -av --delete \
+                --exclude='.git' \
+                ./ /var/jenkins_home/web/
+                '''
             }
         }
     }
 
     post {
         success {
-            echo 'Despliegue completado'
+            echo 'Despliegue completado correctamente'
         }
         failure {
-            echo 'Fallo en el pipeline'
+            echo 'Error en el despliegue'
         }
     }
 }
