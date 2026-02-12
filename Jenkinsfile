@@ -11,9 +11,8 @@ pipeline {
         stage('Desplegar web (copiar archivos)') {
             steps {
                 sh '''
-                rsync -av --delete \
-                --exclude='.git' \
-                ./ /var/jenkins_home/web/
+                rm -rf /var/jenkins_home/web/*
+                cp -r ./* /var/jenkins_home/web/
                 '''
             }
         }
