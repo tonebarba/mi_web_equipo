@@ -1,12 +1,21 @@
 pipeline {
     agent any
 
+    environment {
+        SFTP_USER = "equipo"
+        SFTP_PASS = "password"
+        SFTP_HOST = "localhost"
+        SFTP_PORT = "2222"
+        SFTP_PATH = "/home/equipo/shared"
+    }
+
     stages {
-        stage('Deploy archivos al SFTP') {
+        stage('Enviar archivos al SFTP') {
             steps {
+                // Instala sshpass si hace falta
                 sh '''
-                echo "Archivos desplegados en el servidor SFTP"
-                ls -l *.txt
+                echo "Enviando archivos al servidor SFTP..."
+                sshpass -p $SFTP_PASS scp -P $SFTP_PORT personaA.txt personaB.txt $SFTP_USER@$SFTP_HOST:$SFTP_PATH/
                 '''
             }
         }
