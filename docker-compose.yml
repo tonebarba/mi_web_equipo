@@ -5,5 +5,8 @@ services:
     ports:
       - "2222:22"
     volumes:
-      - .:/home/equipo/shared
+      - sftp_data:/home/equipo/shared
     command: equipo:password:1001
+
+volumes:
+  sftp_data:
