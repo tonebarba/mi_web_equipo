@@ -1,0 +1,9 @@
+services:
+  sftp:
+    image: atmoz/sftp
+    container_name: sftp_server
+    ports:
+      - "2222:22"
+    volumes:
+      - .:/home/equipo/shared
+    command: equipo:password:1001
